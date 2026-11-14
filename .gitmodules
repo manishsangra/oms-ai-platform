@@ -1,0 +1,3 @@
+[submodule "Order Management System/config-repo"]
+	path = Order Management System/config-repo
+	url = https://github.com/manishsangra/oms-config-repo.git
