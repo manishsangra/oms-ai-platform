@@ -1,0 +1,111 @@
+
+<div class="form-page">
+  <div class="form-container">
+
+    <div class="form-header">
+      <span class="eyebrow">INVENTORY MANAGEMENT</span>
+
+      <h1>{{ isEditMode ? 'Edit Product' : 'Create New Product' }}</h1>
+
+      <p>
+        {{ isEditMode
+        ? 'Update the product details below.'
+        : 'Add a new product to your catalogue.' }}
+      </p>
+    </div>
+
+    @if (errorMessage) {
+      <div class="error-message">
+        {{ errorMessage }}
+      </div>
+    }
+
+    @if (loading && isEditMode) {
+      <div class="message">Loading product details...</div>
+    }
+
+    @if (!loading) {
+      <form [formGroup]="productForm" (ngSubmit)="onSubmit()">
+
+        <div class="form-group">
+          <label for="name">Product Name *</label>
+          <input
+            id="name"
+            type="text"
+            formControlName="name"
+            placeholder="Enter product name"
+          />
+
+          @if (productForm.controls.name.touched &&
+          productForm.controls.name.invalid) {
+            <small>Product name is required.</small>
+          }
+        </div>
+
+        <div class="form-group">
+          <label for="description">Description *</label>
+          <textarea
+            id="description"
+            formControlName="description"
+            rows="4"
+            placeholder="Enter product description">
+          </textarea>
+
+          @if (productForm.controls.description.touched &&
+          productForm.controls.description.invalid) {
+            <small>Description is required.</small>
+          }
+        </div>
+
+        <div class="form-row">
+
+          <div class="form-group">
+            <label for="price">Price *</label>
+            <input
+              id="price"
+              type="number"
+              formControlName="price"
+              placeholder="Enter price"
+              min="0.01"
+              step="0.01"
+            />
+
+            @if (productForm.controls.price.touched &&
+            productForm.controls.price.invalid) {
+              <small>Enter a price greater than zero.</small>
+            }
+          </div>
+
+          <div class="form-group">
+            <label for="currency">Currency *</label>
+            <select id="currency" formControlName="currency">
+              <option value="INR">INR - Indian Rupee</option>
+              <option value="USD">USD - US Dollar</option>
+              <option value="EUR">EUR - Euro</option>
+            </select>
+          </div>
+
+        </div>
+
+        <div class="form-actions">
+          <button
+            type="button"
+            class="cancel-button"
+            (click)="cancel()">
+            Cancel
+          </button>
+
+          <button
+            type="submit"
+            class="submit-button"
+            [disabled]="loading">
+            {{ loading
+            ? 'Saving...'
+            : (isEditMode ? 'Update Product' : 'Create Product') }}
+          </button>
+        </div>
+
+      </form>
+    }
+  </div>
+</div>

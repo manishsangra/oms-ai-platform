@@ -1,0 +1,107 @@
+
+<div class="products-page">
+
+  <!-- Page Header -->
+  <div class="page-header">
+    <div>
+      <span class="eyebrow">INVENTORY MANAGEMENT</span>
+      <h1>Product Management</h1>
+      <p>Browse and manage your product catalogue.</p>
+    </div>
+
+    <div class="header-actions">
+      <div class="product-count">
+        {{ products().length }} Products
+      </div>
+
+      @if (isAdmin) {
+        <a routerLink="/products/new" class="add-product-button">
+          + Add Product
+        </a>
+      }
+    </div>
+  </div>
+
+  <!-- Loading -->
+  @if (loading()) {
+    <div class="message">
+      Loading products...
+    </div>
+  }
+
+  <!-- Error -->
+  @if (!loading() && errorMessage()) {
+    <div class="error-message">
+      {{ errorMessage() }}
+      <button (click)="loadProducts()">Retry</button>
+    </div>
+  }
+
+  <!-- Empty State -->
+  @if (!loading() && !errorMessage() && products().length === 0) {
+    <div class="message">
+      No products found.
+    </div>
+  }
+
+  <!-- Product Grid -->
+  @if (!loading() && !errorMessage() && products().length > 0) {
+
+    <div class="product-grid">
+
+      @for (product of products(); track product.id) {
+
+        <article class="product-card">
+
+          <div class="product-image">
+            <span>📦</span>
+          </div>
+
+          <div class="product-details">
+
+            <span class="product-id">
+              SKU #{{ product.id }}
+            </span>
+
+            <h2>{{ product.name }}</h2>
+
+            <p class="description">
+              {{ product.description }}
+            </p>
+
+            <div class="product-footer">
+              <span class="price">
+                {{ product.currency }} {{ product.price }}
+              </span>
+
+              <span class="currency">
+                {{ product.currency }}
+              </span>
+            </div>
+            @if (isAdmin) {
+              <div class="product-actions">
+
+                <a
+                  [routerLink]="['/products', product.id, 'edit']"
+                  class="edit-button">
+                  Edit
+                </a>
+
+                <button
+                  type="button"
+                  class="delete-button"
+                  (click)="deleteProduct(product)">
+                  Delete
+                </button>
+
+              </div>
+            }
+
+          </div>
+
+        </article>
+      }
+    </div>
+  }
+
+</div>

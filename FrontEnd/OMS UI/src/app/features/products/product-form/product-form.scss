@@ -1,0 +1,137 @@
+
+.form-page {
+  min-height: 100vh;
+  padding: 40px 20px;
+  background: #f5f7fb;
+}
+
+.form-container {
+  max-width: 720px;
+  margin: 0 auto;
+  padding: 36px;
+  background: white;
+  border: 1px solid #e8ecf2;
+  border-radius: 14px;
+  box-shadow: 0 8px 25px rgba(0, 0, 0, 0.04);
+}
+
+.form-header {
+  margin-bottom: 30px;
+
+  h1 {
+    margin: 8px 0;
+    color: #172b4d;
+    font-size: 28px;
+  }
+
+  p {
+    color: #6b778c;
+    font-size: 14px;
+  }
+}
+
+.eyebrow {
+  color: #3867d6;
+  font-size: 11px;
+  font-weight: 700;
+  letter-spacing: 1.5px;
+}
+
+.form-group {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  margin-bottom: 22px;
+
+  label {
+    color: #344563;
+    font-size: 14px;
+    font-weight: 600;
+  }
+
+  input,
+  textarea,
+  select {
+    width: 100%;
+    padding: 12px 14px;
+    border: 1px solid #dfe3eb;
+    border-radius: 7px;
+    font-size: 14px;
+    outline: none;
+    background: white;
+
+    &:focus {
+      border-color: #3867d6;
+      box-shadow: 0 0 0 3px rgba(56, 103, 214, 0.1);
+    }
+  }
+
+  textarea {
+    resize: vertical;
+  }
+
+  small {
+    color: #d32f2f;
+    font-size: 12px;
+  }
+}
+
+.form-row {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 20px;
+}
+
+.form-actions {
+  display: flex;
+  justify-content: flex-end;
+  gap: 12px;
+  margin-top: 30px;
+
+  button {
+    padding: 12px 22px;
+    border-radius: 7px;
+    font-weight: 600;
+    cursor: pointer;
+  }
+}
+
+.cancel-button {
+  background: white;
+  border: 1px solid #dfe3eb;
+  color: #344563;
+}
+
+.submit-button {
+  background: #2457c5;
+  border: none;
+  color: white;
+
+  &:hover {
+    background: #1947a8;
+  }
+
+  &:disabled {
+    opacity: 0.6;
+    cursor: not-allowed;
+  }
+}
+
+.error-message {
+  padding: 12px;
+  margin-bottom: 20px;
+  color: #c62828;
+  background: #ffebee;
+  border-radius: 6px;
+}
+
+@media (max-width: 600px) {
+  .form-container {
+    padding: 22px;
+  }
+
+  .form-row {
+    grid-template-columns: 1fr;
+    gap: 0;
+  }
+}

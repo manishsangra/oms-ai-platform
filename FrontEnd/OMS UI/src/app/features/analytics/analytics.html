@@ -1,0 +1,186 @@
+
+<div class="analytics-container">
+
+  <div class="page-header">
+    <div>
+      <h1>Analytics Dashboard</h1>
+      <p>Overview of your Order Management System</p>
+    </div>
+
+    <button class="refresh-button" (click)="loadAnalytics()">
+      ↻ Refresh Data
+    </button>
+  </div>
+
+  @if (loading()) {
+    <div class="message">Loading analytics...</div>
+  }
+
+  @if (errorMessage()) {
+    <div class="error-message">{{ errorMessage() }}</div>
+  }
+
+  @if (!loading() && !errorMessage()) {
+
+    <!-- KPI CARDS -->
+
+    <div class="stats-grid">
+
+      <div class="stat-card blue">
+        <div class="stat-icon">🛒</div>
+        <div class="stat-label">Total Orders</div>
+        <div class="stat-value">{{ totalOrders() }}</div>
+        <div class="stat-footer">All registered orders</div>
+      </div>
+
+      <div class="stat-card green">
+        <div class="stat-icon">₹</div>
+        <div class="stat-label">Total Revenue</div>
+        <div class="stat-value">
+          {{ currency() }}
+          {{ totalRevenue() | number:'1.2-2' }}
+        </div>
+        <div class="stat-footer">Value of all orders</div>
+      </div>
+
+      <div class="stat-card orange">
+        <div class="stat-icon">◷</div>
+        <div class="stat-label">Pending Orders</div>
+        <div class="stat-value">{{ pendingOrders() }}</div>
+        <div class="stat-footer">Awaiting processing</div>
+      </div>
+
+      <div class="stat-card purple">
+        <div class="stat-icon">✓</div>
+        <div class="stat-label">Completed Orders</div>
+        <div class="stat-value">{{ completedOrders() }}</div>
+        <div class="stat-footer">Successfully completed</div>
+      </div>
+
+    </div>
+
+    <!-- ADDITIONAL METRICS -->
+
+    <div class="secondary-grid">
+
+      <div class="metric-card">
+        <span>Cancelled Orders</span>
+        <strong>{{ cancelledOrders() }}</strong>
+      </div>
+
+      <div class="metric-card">
+        <span>Total Items Sold</span>
+        <strong>{{ totalItems() }}</strong>
+      </div>
+
+      <div class="metric-card">
+        <span>Average Order Value</span>
+        <strong>
+          {{ currency() }}
+          {{ averageOrderValue() | number:'1.2-2' }}
+        </strong>
+      </div>
+
+    </div>
+
+    <!-- ORDER STATUS -->
+
+    <div class="content-card">
+      <h2>Order Status Distribution</h2>
+      <p class="subtitle">Breakdown of orders by current status</p>
+
+      @for (status of statusBreakdown(); track status.status) {
+        <div class="status-row">
+
+          <div class="status-heading">
+            <span>{{ status.status }}</span>
+            <strong>
+              {{ status.count }} ({{ status.percentage | number:'1.0-1' }}%)
+            </strong>
+          </div>
+
+          <div class="progress-track">
+            <div
+              class="progress-fill"
+              [class.pending-fill]="status.status === 'PENDING'"
+              [class.completed-fill]="status.status === 'COMPLETED'"
+              [class.cancelled-fill]="status.status === 'CANCELLED'"
+              [style.width.%]="status.percentage">
+            </div>
+          </div>
+
+        </div>
+      }
+    </div>
+
+    <!-- RECENT ORDERS -->
+
+    <div class="content-card recent-orders">
+
+      <div class="section-heading">
+        <div>
+          <h2>Recent Orders</h2>
+          <p class="subtitle">Latest five orders</p>
+        </div>
+
+        <button class="view-all-button" (click)="viewAllOrders()">
+          View All Orders →
+        </button>
+      </div>
+
+      @if (recentOrders().length === 0) {
+        <div class="message">No orders available.</div>
+      } @else {
+
+        <div class="table-wrapper">
+          <table>
+            <thead>
+            <tr>
+              <th>Order ID</th>
+              <th>Customer ID</th>
+              <th>Date</th>
+              <th>Amount</th>
+              <th>Status</th>
+              <th>Action</th>
+            </tr>
+            </thead>
+
+            <tbody>
+              @for (order of recentOrders(); track order.id) {
+                <tr>
+                  <td>#{{ order.id }}</td>
+                  <td>{{ order.customerId }}</td>
+                  <td>
+                    {{ order.createdAt | date:'dd MMM yyyy' }}
+                  </td>
+                  <td class="amount">
+                    {{ order.currency }}
+                    {{ order.totalAmount | number:'1.2-2' }}
+                  </td>
+                  <td>
+                    <span class="status-badge"
+                          [class.pending]="order.status === 'PENDING'"
+                          [class.completed]="order.status === 'COMPLETED'"
+                          [class.cancelled]="order.status === 'CANCELLED'">
+                      {{ order.status }}
+                    </span>
+                  </td>
+                  <td>
+                    <button
+                      class="details-button"
+                      (click)="viewOrderDetails(order.id)">
+                      View
+                    </button>
+                  </td>
+                </tr>
+              }
+            </tbody>
+          </table>
+        </div>
+      }
+
+    </div>
+
+  }
+
+</div>

@@ -1,0 +1,183 @@
+
+<div class="order-form-container">
+
+  <div class="page-header">
+    <div>
+      <h1>Create New Order</h1>
+      <p>Add customer details and select products</p>
+    </div>
+
+    <button type="button" class="back-button" (click)="cancel()">
+      Back to Orders
+    </button>
+  </div>
+
+  @if (errorMessage()) {
+    <div class="error-message">{{ errorMessage() }}</div>
+  }
+
+  @if (successMessage()) {
+    <div class="success-message">{{ successMessage() }}</div>
+  }
+
+  <div class="form-card">
+
+    <section class="form-section">
+      <h2>Customer Information</h2>
+
+      <label for="customerId">Customer ID</label>
+
+      <input
+        id="customerId"
+        type="number"
+        min="1"
+        placeholder="Enter Customer ID"
+        [ngModel]="customerId()"
+        (ngModelChange)="customerId.set($event ? +$event : null)"
+      />
+    </section>
+
+    <section class="form-section">
+      <h2>Add Products</h2>
+
+      @if (loadingProducts()) {
+        <p>Loading products...</p>
+      } @else {
+
+        <div class="product-selection">
+
+          <div class="field">
+            <label for="product">Select Product</label>
+
+            <select
+              id="product"
+              [ngModel]="selectedProductId()"
+              (ngModelChange)="selectedProductId.set($event ? +$event : null)"
+            >
+              <option [ngValue]="null">Choose a product</option>
+
+              @for (product of products(); track product.id) {
+                <option [ngValue]="product.id">
+                  {{ product.name }} -
+                  {{ product.currency }} {{ product.price }}
+                </option>
+              }
+            </select>
+          </div>
+
+          <div class="field quantity-field">
+            <label for="quantity">Quantity</label>
+
+            <input
+              id="quantity"
+              type="number"
+              min="1"
+              [ngModel]="selectedQuantity()"
+              (ngModelChange)="selectedQuantity.set(+$event)"
+            />
+          </div>
+
+          <button
+            type="button"
+            class="add-button"
+            (click)="addItem()"
+          >
+            + Add Product
+          </button>
+
+        </div>
+      }
+    </section>
+
+    <section class="form-section">
+      <h2>Order Items</h2>
+
+      @if (selectedItems().length === 0) {
+        <div class="empty-items">
+          No products added yet.
+        </div>
+      } @else {
+
+        <div class="table-wrapper">
+          <table>
+            <thead>
+            <tr>
+              <th>Product</th>
+              <th>Unit Price</th>
+              <th>Quantity</th>
+              <th>Subtotal</th>
+              <th>Action</th>
+            </tr>
+            </thead>
+
+            <tbody>
+              @for (item of selectedItems(); track item.product.id) {
+                <tr>
+                  <td>{{ item.product.name }}</td>
+
+                  <td>
+                    {{ item.product.currency }}
+                    {{ item.product.price | number:'1.2-2' }}
+                  </td>
+
+                  <td>
+                    <input
+                      class="quantity-input"
+                      type="number"
+                      min="1"
+                      [ngModel]="item.quantity"
+                      (ngModelChange)="updateItemQuantity(item.product.id, +$event)"
+                    />
+                  </td>
+
+                  <td>
+                    {{ item.product.currency }}
+                    {{ item.product.price * item.quantity | number:'1.2-2' }}
+                  </td>
+
+                  <td>
+                    <button
+                      type="button"
+                      class="remove-button"
+                      (click)="removeItem(item.product.id)"
+                    >
+                      Remove
+                    </button>
+                  </td>
+                </tr>
+              }
+            </tbody>
+          </table>
+        </div>
+
+        <div class="total-section">
+          <span>Order Total</span>
+          <strong>
+            {{ selectedItems()[0].product.currency }}
+            {{ totalAmount() | number:'1.2-2' }}
+          </strong>
+        </div>
+      }
+    </section>
+
+    <div class="form-actions">
+      <button
+        type="button"
+        class="cancel-button"
+        (click)="cancel()"
+      >
+        Cancel
+      </button>
+
+      <button
+        type="button"
+        class="submit-button"
+        [disabled]="submitting() || selectedItems().length === 0"
+        (click)="createOrder()"
+      >
+        {{ submitting() ? 'Creating Order...' : 'Create Order' }}
+      </button>
+    </div>
+
+  </div>
+</div>

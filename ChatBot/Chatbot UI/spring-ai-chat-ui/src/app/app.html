@@ -1,0 +1,144 @@
+
+<div class="chat-container">
+
+  <header class="chat-header">
+    <div>
+      <h2>AI Assistant</h2>
+      <p>Powered by Spring AI + Gemini</p>
+    </div>
+    <span class="status">● Online</span>
+  </header>
+
+  <section class="mode-toolbar">
+    <button
+      [class.active-mode]="chatMode === 'normal'"
+      (click)="chatMode = 'normal'">
+      💬 Normal Chat
+    </button>
+
+    <button
+      [class.active-mode]="chatMode === 'document'"
+      (click)="chatMode = 'document'">
+      📚 Document Q&A
+    </button>
+  </section>
+
+  <main class="chat-body" #chatBody>
+
+    @if (messages.length === 0) {
+      <div class="welcome-message">
+        <h1>Hello! 👋</h1>
+        <h3>How can I help you today?</h3>
+        <p>
+          Ask ManishGPT anything!!
+        </p>
+      </div>
+    }
+
+    @for (message of messages; track $index) {
+
+      <div
+        class="message-row"
+        [class.user-row]="message.role === 'user'"
+      >
+
+        <div
+          class="message"
+          [class.user-message]="message.role === 'user'"
+          [class.ai-message]="message.role === 'assistant'"
+        >
+
+          @if (message.role === 'assistant') {
+            <div [innerHTML]="renderMarkdown(message.content)"></div>
+          } @else {
+            {{ message.content }}
+          }
+
+        </div>
+
+      </div>
+
+    }
+
+    @if (isLoading) {
+      <div class="message-row">
+        <div class="message ai-message">
+          Gemini is thinking...
+        </div>
+      </div>
+    }
+
+  </main>
+
+
+  <footer class="chat-footer">
+
+    <input
+      type="text"
+      [(ngModel)]="userMessage"
+      (keyup.enter)="sendMessage()"
+      [placeholder]="chatMode === 'document'
+      ? 'Ask something about your uploaded document...'
+      : 'Ask your question...'"
+      [disabled]="isLoading"
+    />
+
+    @if (chatMode === 'document') {
+
+      <label class="upload-button">
+        📎 Browse
+
+        <input
+          type="file"
+          accept=".pdf,.docx,.txt"
+          (change)="onFileSelected($event)"
+          hidden
+        />
+      </label>
+
+      @if (selectedFile) {
+        <span class="selected-file">
+        {{ selectedFile.name }}
+      </span>
+
+        <button
+          type="button"
+          class="upload-submit"
+          (click)="uploadSelectedDocument()"
+          [disabled]="isUploading"
+        >
+          {{ isUploading ? 'Uploading...' : 'Upload' }}
+        </button>
+      }
+
+    }
+
+    <button
+      type="button"
+      class="send-button"
+      (click)="sendMessage()"
+      [disabled]="isLoading"
+    >
+      Send ➤
+    </button>
+
+  </footer>
+
+  @if (chatMode === 'document') {
+
+    @if (uploadMessage) {
+      <div class="upload-success">
+        ✓ {{ uploadMessage }}
+      </div>
+    }
+
+    @if (uploadError) {
+      <div class="upload-error">
+        {{ uploadError }}
+      </div>
+    }
+
+  }
+
+
+</div>

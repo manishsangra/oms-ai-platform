@@ -1,0 +1,118 @@
+
+<div class="orders-container">
+
+  <div class="page-header">
+    <div>
+      <h1>Order Management</h1>
+      <p>View and manage customer orders</p>
+    </div>
+
+    <div class="header-actions">
+      <button
+        class="create-button"
+        (click)="createNewOrder()">
+        + Create New Order
+      </button>
+
+      <button
+        class="refresh-button"
+        (click)="loadOrders()">
+        Refresh
+      </button>
+    </div>
+  </div>
+
+  @if (loading()) {
+    <div class="message">Loading orders...</div>
+  }
+
+  @if (errorMessage()) {
+    <div class="error-message">{{ errorMessage() }}</div>
+  }
+
+  @if (!loading() && !errorMessage()) {
+
+    @if (orders().length === 0) {
+      <div class="message">No orders found.</div>
+    } @else {
+
+      <div class="orders-grid">
+
+        @for (order of orders(); track order.id) {
+          <div class="order-card">
+
+            <div class="order-header">
+              <div>
+                <span class="order-label">Order ID</span>
+                <h3>#{{ order.id }}</h3>
+              </div>
+
+              <span class="status"
+                    [class.pending]="order.status === 'PENDING'"
+                    [class.completed]="order.status === 'COMPLETED'"
+                    [class.cancelled]="order.status === 'CANCELLED'">
+                {{ order.status }}
+              </span>
+            </div>
+
+            <div class="order-details">
+              <div>
+                <span>Customer ID</span>
+                <strong>{{ order.customerId }}</strong>
+              </div>
+
+              <div>
+                <span>Order Date</span>
+                <strong>{{ order.createdAt | date:'dd MMM yyyy, hh:mm a' }}</strong>
+              </div>
+
+              <div>
+                <span>Total Amount</span>
+                <strong class="amount">
+                  {{ order.currency }} {{ order.totalAmount | number:'1.2-2' }}
+                </strong>
+              </div>
+
+              <div>
+                <span>Total Items</span>
+                <strong>{{ order.items.length }}</strong>
+              </div>
+            </div>
+
+            <div class="items-section">
+              <h4>Order Items</h4>
+
+              @for (item of order.items; track item.productId) {
+                <div class="item-row">
+                  <div>
+                    <strong>{{ item.productName }}</strong>
+                    <small>Product ID: {{ item.productId }}</small>
+                  </div>
+
+                  <div class="item-quantity">
+                    Qty: {{ item.quantity }}
+                  </div>
+
+                  <div class="item-price">
+                    {{ order.currency }} {{ item.lineTotal | number:'1.2-2' }}
+                  </div>
+                </div>
+              }
+            </div>
+
+            <div class="card-actions">
+              <button
+                class="view-details-button"
+                (click)="viewOrderDetails(order.id)">
+                View Details →
+              </button>
+            </div>
+
+          </div>
+        }
+
+      </div>
+    }
+  }
+
+</div>

@@ -1,0 +1,36 @@
+# IntelliJ
+.idea/
+*.iml
+
+# Java / Maven
+target/
+*.class
+
+# Build outputs
+build/
+out/
+
+# Archives and binaries
+*.zip
+*.tar
+*.tar.gz
+*.rar
+*.7z
+
+# Logs
+*.log
+
+# OS files
+.DS_Store
+Thumbs.db
+
+# Secrets
+.env
+.env.*
+!.env.example
+
+# Projects excluded from this repository
+/Order Management System/
+/ChatBot.zip
+/Order Management System.zip
+/config-repo/

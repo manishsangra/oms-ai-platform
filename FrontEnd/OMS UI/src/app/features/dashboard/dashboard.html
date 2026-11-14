@@ -1,0 +1,117 @@
+
+<div class="dashboard">
+
+  <header class="topbar">
+    <div class="brand">
+      <span class="brand-logo">O</span>
+      <span>OrderFlow</span>
+    </div>
+
+    <div class="user-section">
+      <span class="role">{{ isAdmin ? 'Administrator' : 'User' }}</span>
+      <span class="username">{{ username || 'OMS User' }}</span>
+      <button (click)="logout()">Logout</button>
+    </div>
+  </header>
+
+  <div class="dashboard-body">
+
+    <aside class="sidebar">
+      <p class="menu-heading">WORKSPACE</p>
+
+      <a class="menu-item active" routerLink="/dashboard">
+        <span>▦</span> Dashboard
+      </a>
+
+      <a class="menu-item" routerLink="/products">
+        <span>▣</span> Products
+      </a>
+
+      <a class="menu-item" routerLink="/orders">
+        <span>▤</span> Orders
+      </a>
+
+      <a class="menu-item active" routerLink="/analytics">
+        <span>▦</span> Analytics
+      </a>
+
+      @if (isAdmin) {
+        <p class="menu-heading admin-heading">ADMINISTRATION</p>
+        <a class="menu-item" routerLink="/products">
+          <span>⚙</span> Product Management
+        </a>
+      }
+    </aside>
+
+    <main class="main-content">
+
+      <div class="page-heading">
+        <div>
+          <h1>Dashboard</h1>
+          <p>Welcome to your Order Management workspace.</p>
+        </div>
+
+        <span class="live-indicator">● System Ready</span>
+      </div>
+
+      <section class="welcome-card">
+        <div>
+          <span class="welcome-label">ORDER MANAGEMENT SYSTEM</span>
+          <h2>Everything you need to manage your business.</h2>
+          <p>Manage products, create orders and track your operations.</p>
+        </div>
+        <div class="welcome-symbol">OMS</div>
+      </section>
+
+      <section class="stats-grid">
+
+        <div class="stat-card">
+          <div class="stat-icon products-icon">▣</div>
+          <span>Total Products</span>
+          <strong>—</strong>
+          <small>Live data integration coming next</small>
+        </div>
+
+        <div class="stat-card">
+          <div class="stat-icon orders-icon">▤</div>
+          <span>Total Orders</span>
+          <strong>—</strong>
+          <small>Live data integration coming next</small>
+        </div>
+
+        <div class="stat-card">
+          <div class="stat-icon pending-icon">◷</div>
+          <span>Pending Orders</span>
+          <strong>—</strong>
+          <small>Live data integration coming next</small>
+        </div>
+
+      </section>
+
+      <section class="quick-actions">
+        <h3>Quick Actions</h3>
+
+        <div class="action-grid">
+          <a routerLink="/products" class="action-card">
+            <span>▣</span>
+            <div>
+              <strong>Manage Products</strong>
+              <p>View and manage your product catalogue.</p>
+            </div>
+            <b>→</b>
+          </a>
+
+          <a routerLink="/orders" class="action-card">
+            <span>▤</span>
+            <div>
+              <strong>Create Order</strong>
+              <p>Create a new customer order.</p>
+            </div>
+            <b>→</b>
+          </a>
+        </div>
+      </section>
+
+    </main>
+  </div>
+</div>

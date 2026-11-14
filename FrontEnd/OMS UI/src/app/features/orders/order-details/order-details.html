@@ -1,0 +1,131 @@
+
+<div class="details-container">
+
+  <div class="page-header">
+    <div>
+      <h1>Order Details</h1>
+      <p>Complete information about your order</p>
+    </div>
+
+    <button class="back-button" (click)="goBack()">
+      ← Back to Orders
+    </button>
+  </div>
+
+  @if (loading()) {
+    <div class="message">Loading order details...</div>
+  }
+
+  @if (errorMessage()) {
+    <div class="error-message">
+      {{ errorMessage() }}
+    </div>
+  }
+
+  @if (!loading() && order(); as currentOrder) {
+
+    <div class="details-card">
+
+      <div class="order-heading">
+        <div>
+          <span class="label">Order Number</span>
+          <h2>#{{ currentOrder.id }}</h2>
+        </div>
+
+        <span class="status"
+              [class.pending]="currentOrder.status === 'PENDING'"
+              [class.completed]="currentOrder.status === 'COMPLETED'"
+              [class.cancelled]="currentOrder.status === 'CANCELLED'">
+          {{ currentOrder.status }}
+        </span>
+      </div>
+
+      <section class="section">
+        <h3>Customer Information</h3>
+
+        <div class="info-grid">
+          <div class="info-item">
+            <span>Customer ID</span>
+            <strong>{{ currentOrder.customerId }}</strong>
+          </div>
+
+          <div class="info-item">
+            <span>Order ID</span>
+            <strong>#{{ currentOrder.id }}</strong>
+          </div>
+
+          <div class="info-item">
+            <span>Order Date</span>
+            <strong>
+              {{ currentOrder.createdAt | date:'dd MMM yyyy, hh:mm a' }}
+            </strong>
+          </div>
+
+          <div class="info-item">
+            <span>Order Status</span>
+            <strong>{{ currentOrder.status }}</strong>
+          </div>
+        </div>
+      </section>
+
+      <section class="section">
+        <h3>Ordered Products</h3>
+
+        <div class="table-wrapper">
+          <table>
+            <thead>
+            <tr>
+              <th>Product ID</th>
+              <th>Product Name</th>
+              <th>Unit Price</th>
+              <th>Quantity</th>
+              <th>Line Total</th>
+            </tr>
+            </thead>
+
+            <tbody>
+              @for (item of currentOrder.items; track item.id) {
+                <tr>
+                  <td>{{ item.productId }}</td>
+                  <td>{{ item.productName }}</td>
+                  <td>
+                    {{ currentOrder.currency }}
+                    {{ item.unitPrice | number:'1.2-2' }}
+                  </td>
+                  <td>{{ item.quantity }}</td>
+                  <td class="line-total">
+                    {{ currentOrder.currency }}
+                    {{ item.lineTotal | number:'1.2-2' }}
+                  </td>
+                </tr>
+              }
+            </tbody>
+          </table>
+        </div>
+      </section>
+
+      <div class="summary-section">
+        <div>
+          <span>Total Products</span>
+          <strong>{{ currentOrder.items.length }}</strong>
+        </div>
+
+        <div class="grand-total">
+          <span>Grand Total</span>
+          <strong>
+            {{ currentOrder.currency }}
+            {{ currentOrder.totalAmount | number:'1.2-2' }}
+          </strong>
+        </div>
+      </div>
+
+      <div class="footer-actions">
+        <button class="back-button" (click)="goBack()">
+          Back to Order Dashboard
+        </button>
+      </div>
+
+    </div>
+  }
+
+</div>

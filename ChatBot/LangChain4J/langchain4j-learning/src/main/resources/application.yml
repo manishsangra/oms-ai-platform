@@ -1,0 +1,7 @@
+server:
+  port: 8086
+
+app:
+  gemini:
+    api-key: ${GEMINI_API_KEY}
+    model: gemini-3.8-flash

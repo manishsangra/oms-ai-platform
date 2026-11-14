@@ -1,0 +1,13 @@
+server:
+  port: 8888
+
+spring:
+  application:
+    name: config-server
+  cloud:
+    config:
+      server:
+        git:
+          uri: file:///C:/Users/ManishKumarSangra/IdeaProjects/config-repo
+          default-label: master
+          clone-on-start: true

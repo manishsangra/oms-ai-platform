@@ -1,0 +1,32 @@
+spring:
+  application:
+    name: product-service-test
+
+  datasource:
+    url: jdbc:h2:mem:productintegrationdb;DB_CLOSE_DELAY=-1
+    driver-class-name: org.h2.Driver
+    username: sa
+    password:
+
+  jpa:
+    hibernate:
+      ddl-auto: create-drop
+    show-sql: true
+
+  cloud:
+    config:
+      enabled: false
+
+eureka:
+  client:
+    enabled: false
+    register-with-eureka: false
+    fetch-registry: false
+
+management:
+  tracing:
+    sampling:
+      probability: 0.0
+
+jwt:
+  secret: my-local-development-secret-key-2026-oms-project

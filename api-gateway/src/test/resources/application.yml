@@ -1,0 +1,25 @@
+spring:
+  application:
+    name: api-gateway-test
+
+  cloud:
+    config:
+      enabled: false
+
+eureka:
+  client:
+    enabled: false
+    register-with-eureka: false
+    fetch-registry: false
+
+management:
+  endpoints:
+    web:
+      exposure:
+        include: health,info
+  tracing:
+    sampling:
+      probability: 0.0
+
+jwt:
+  secret: my-local-development-secret-key-2026-oms-project
