@@ -1,3 +1,4 @@
+/*
 package com.example.springaiassistant.controller;
 
 import com.example.springaiassistant.service.DocumentIngestionService;
@@ -34,4 +35,4 @@ public class DocumentController {
                 "totalChunks", chunks
         );
     }
-}
+}*/

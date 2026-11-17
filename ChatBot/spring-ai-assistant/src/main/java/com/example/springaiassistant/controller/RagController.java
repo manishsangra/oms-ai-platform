@@ -1,3 +1,4 @@
+/*
 
 package com.example.springaiassistant.controller;
 
@@ -27,3 +28,4 @@ public class RagController {
         return Map.of("answer", answer);
     }
 }
+*/

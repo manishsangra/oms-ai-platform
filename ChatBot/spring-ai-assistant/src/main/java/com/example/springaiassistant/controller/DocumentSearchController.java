@@ -1,3 +1,4 @@
+/*
 package com.example.springaiassistant.controller;
 
 import com.example.springaiassistant.dto.DocumentSearchResult;
@@ -33,4 +34,4 @@ public class DocumentSearchController {
                 ))
                 .toList();
     }
-}
+}*/

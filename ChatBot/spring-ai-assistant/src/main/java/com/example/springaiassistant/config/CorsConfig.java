@@ -18,7 +18,10 @@ public class CorsConfig {
             public void addCorsMappings(CorsRegistry registry) {
 
                 registry.addMapping("/api/**")
-                        .allowedOrigins("http://localhost:4200")
+                        .allowedOrigins(
+                                "http://localhost:4200",
+                                "https://13.210.254.189"
+                        )
                         .allowedMethods(
                                 "GET",
                                 "POST",
@@ -26,7 +29,8 @@ public class CorsConfig {
                                 "DELETE",
                                 "OPTIONS"
                         )
-                        .allowedHeaders("*");
+                        .allowedHeaders("*")
+                        .allowCredentials(false);
             }
         };
     }

@@ -1,3 +1,4 @@
+/*
 
 package com.example.springaiassistant.service;
 
@@ -28,3 +29,4 @@ public class DocumentSearchService {
         return vectorStore.similaritySearch(searchRequest);
     }
 }
+*/

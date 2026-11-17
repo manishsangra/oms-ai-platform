@@ -97,3 +97,23 @@ $RECYCLE.BIN/
 # VS Code workspace files
 # ==========================================
 .vscode/
+
+# ==========================================
+# Android / Kotlin specific
+# ==========================================
+.kotlin/
+local.properties
+**/local.properties
+
+# ==========================================
+# Android signing credentials
+# ==========================================
+*.jks
+*.keystore
+key.properties
+
+# ==========================================
+# Android generated packages
+# ==========================================
+*.apk
+*.aab

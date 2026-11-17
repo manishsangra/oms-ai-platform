@@ -1,4 +1,3 @@
-
 server:
   port: 8085
 
@@ -6,45 +5,15 @@ spring:
   application:
     name: spring-ai-assistant
 
-  datasource:
-    url: jdbc:postgresql://localhost:5433/spring_ai_rag
-    username: postgres
-    password: ${POSTGRES_PASSWORD:manish}
-    driver-class-name: org.postgresql.Driver
-
   ai:
     google:
       genai:
         api-key: ${GEMINI_API_KEY}
-
         chat:
           model: gemini-3.5-flash-lite
           max-output-tokens: 8192
 
-        embedding:
-          api-key: ${GEMINI_API_KEY}
-          text:
-            model: gemini-embedding-001
-            dimensions: 768
-    mcp:
-      client:
-        type: SYNC
-        request-timeout: 30s
-        streamable-http:
-          connections:
-            oms-server:
-              url: http://localhost:8087
-              endpoint: /mcp
-
-    vectorstore:
-      pgvector:
-        index-type: HNSW
-        distance-type: COSINE_DISTANCE
-        dimensions: 768
-        initialize-schema: true
-
 logging:
   level:
-    org.springframework.ai: DEBUG
-    org.springframework.ai.mcp: DEBUG
-    io.modelcontextprotocol: DEBUG
+    org.springframework.ai: INFO
+    root: INFO

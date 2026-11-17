@@ -1,0 +1,27 @@
+
+server:
+  port: 8085
+
+spring:
+  application:
+    name: spring-ai-assistant
+
+  ai:
+    retry:
+      max-attempts: 3
+      backoff:
+        initial-interval: 1s
+        multiplier: 2
+        max-interval: 5s
+
+    google:
+      genai:
+        api-key: ${GEMINI_API_KEY}
+        chat:
+          model: gemini-3.5-flash-lite
+          max-output-tokens: 8192
+
+logging:
+  level:
+    org.springframework.ai: INFO
+    root: INFO

@@ -1,3 +1,4 @@
+/*
 
 package com.example.springaiassistant.service;
 
@@ -69,3 +70,4 @@ public class RagAnswerService {
                 .content();
     }
 }
+*/

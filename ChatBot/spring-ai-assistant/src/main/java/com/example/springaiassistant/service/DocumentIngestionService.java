@@ -1,3 +1,4 @@
+/*
 
 package com.example.springaiassistant.service;
 
@@ -87,3 +88,4 @@ public class DocumentIngestionService {
         return chunks.size();
     }
 }
+*/
